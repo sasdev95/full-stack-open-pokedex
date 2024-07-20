@@ -26,6 +26,7 @@ const PokemonPage = ({ previous, next }) => {
   const normalAbility = pokemon.abilities.find((ability) => !ability.is_hidden)
   const hiddenAbility = pokemon.abilities.find((ability) => ability.is_hidden === true)
 
+  // eslint-disable-next-line no-console
   console.log('hiddenAbility=', hiddenAbility)
   return (
     <>
@@ -51,8 +52,8 @@ const PokemonPage = ({ previous, next }) => {
             </table>
           </div>
           <div className="pokemon-abilities">
-            {normalAbility && <PokemonAbility abilityName={formatName(normalAbility.ability.name)} />}
-            {hiddenAbility && <PokemonAbility abilityName={formatName(hiddenAbility.ability.name)} />}
+            {normalAbility && <PokemonAbility abilityName={formatName(normalAbility.ability.name)} isHidden={false} />}
+            {hiddenAbility && <PokemonAbility abilityName={formatName(hiddenAbility.ability.name)} isHidden={true} />}
           </div>
         </div>
       </div>
