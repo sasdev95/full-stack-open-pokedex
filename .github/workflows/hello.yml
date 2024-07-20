@@ -6,9 +6,5 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-
       - name: Say Hello World
         run: echo "Hello World!"
-      
