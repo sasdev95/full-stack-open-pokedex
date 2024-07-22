@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 // get the port from env variable
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 5000
 
 app.use(express.static('dist'))
 
@@ -12,6 +12,10 @@ app.get('/health', (req, res) => {
 
 app.get('/version', (req, res) => {
   res.send('10')
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/dist/index.html')
 })
 
 app.listen(PORT, () => {
