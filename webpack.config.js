@@ -1,8 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -48,7 +45,8 @@ module.exports = {
     historyApiFallback: true,
     allowedHosts: [
       '.onrender.com'
-    ]
+    ],
+    port: 8080
   },
   plugins: [
     new HtmlWebPackPlugin({
