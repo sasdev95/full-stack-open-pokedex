@@ -10,7 +10,7 @@ describe('Pokedex', function() {
   })
 
   it('pokemon page can be accessed', function() {
-    cy.visit('http://localhost:80800')
+    cy.visit('http://localhost:8080')
     cy.contains('ivysaur').click()
     cy.url().should('include', '/pokemon/ivysaur')
     cy.contains('chlorophyll')
