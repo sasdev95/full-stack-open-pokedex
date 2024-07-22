@@ -43,6 +43,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    allowedHosts: [
+      'https://full-stack-open-pokedex-ez92.onrender.com'
+    ]
   },
   plugins: [
     new HtmlWebPackPlugin({
