@@ -46,7 +46,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    allowedHosts: process.env.ALLOWED_HOSTS ? process.env.ALLOWED_HOSTS.split(',') : []
+    allowedHosts: [
+      '.onrender.com'
+    ]
   },
   plugins: [
     new HtmlWebPackPlugin({
