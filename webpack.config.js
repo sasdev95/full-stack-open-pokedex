@@ -1,5 +1,8 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -43,9 +46,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    allowedHosts: [
-      'https://full-stack-open-pokedex-ez92.onrender.com'
-    ]
+    allowedHosts: process.env.ALLOWED_HOSTS ? process.env.ALLOWED_HOSTS.split(',') : []
   },
   plugins: [
     new HtmlWebPackPlugin({
