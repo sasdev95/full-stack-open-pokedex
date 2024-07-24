@@ -51,15 +51,15 @@ jobs:
     needs: [simple_deployment_pipeline, tag_release]
     steps:
       - name: Success notification
-        if: success()
+        if: ${{ success() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          details: A new version has been successfully deployed!
+          details: A new version has been built.
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Failure notification
-        if: failure()
+        if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
