@@ -40,16 +40,13 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message), '#skip') }}
     steps:
       - uses: actions/checkout@v4
+      
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@777684df761b882a3f4f70db16ac70d8cc78d0ea
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-
-  discord_notify:
-    runs-on: ubuntu-20.04
-    needs: [simple_deployment_pipeline, tag_release]
-    steps:
+          
       - name: Success notification
         if: ${{ success() }}
         uses: rjstone/discord-webhook-notify@v1
