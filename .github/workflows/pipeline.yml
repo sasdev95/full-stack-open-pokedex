@@ -63,9 +63,5 @@ jobs:
           severity: error
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           details: ''
-          text: |
-            Build has failed.
-            - Commit: ${{ github.sha }}
-            - Author: ${{ github.event.head_commit.author.name }}
-            - Message: ${{ github.event.head_commit.message }}
-            - URL: ${{ github.event.head_commit.url }}
+          description: commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.
+          text: Build has failed.
