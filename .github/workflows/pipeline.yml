@@ -35,7 +35,7 @@ jobs:
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
   tag_release:
-    needs: [simple_deployment_pipeline]
+    needs: simple_deployment_pipeline
     runs-on: ubuntu-20.04
     if: ${{ github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message), '#skip') }}
     steps:
@@ -48,18 +48,17 @@ jobs:
           DEFAULT_BUMP: patch
           
       - name: Success notification
-        if: ${{ success() }}
+        if: success()
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           details: A new version has been built.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           
       - name: Failure notification
-        if: ${{ failure() }}
+        if: failure()
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           details: Build has failed.
-          description: commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
