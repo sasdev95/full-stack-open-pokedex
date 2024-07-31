@@ -47,6 +47,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           
+      - name: Debug
+        run: echo ${{ secrets.DISCORD_WEBHOOK }}
+        
       - name: Success notification
         if: success()
         uses: rjstone/discord-webhook-notify@v1
