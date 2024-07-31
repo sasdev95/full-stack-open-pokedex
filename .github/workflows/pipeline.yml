@@ -75,4 +75,4 @@ jobs:
         run: |
           echo "Sending failure notification"
           echo "Webhook URL: ${{ secrets.DISCORD_WEBHOOK }}"
-          echo "Message: Build has failed. Commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build."
+          echo "Message: Build has failed."
