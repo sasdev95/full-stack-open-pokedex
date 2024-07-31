@@ -46,9 +46,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-          
-      - name: Debug
-        run: echo ${{ secrets.DISCORD_WEBHOOK }}
         
       - name: Success notification
         if: success()
@@ -65,3 +62,17 @@ jobs:
           severity: error
           details: Build has failed.
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Debug Success Notification
+        if: success()
+        run: |
+          echo "Sending success notification"
+          echo "Webhook URL: ${{ secrets.DISCORD_WEBHOOK }}"
+          echo "Message: A new version has been built."
+
+      - name: Debug Failure Notification
+        if: failure()
+        run: |
+          echo "Sending failure notification"
+          echo "Webhook URL: ${{ secrets.DISCORD_WEBHOOK }}"
+          echo "Message: Build has failed. Commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build."
