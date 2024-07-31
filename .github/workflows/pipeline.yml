@@ -33,30 +33,32 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-      - name: Success notification
-        if: ${{ success() }}
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: info
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          details: A new version has been built.
-      - name: Failure notification
-        if: ${{ failure() }}
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          details: Build has failed.
-          description: commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.
 
   tag_release:
-    needs: [simple_deployment_pipeline]
+    needs: simple_deployment_pipeline
     runs-on: ubuntu-20.04
     if: ${{ github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message), '#skip') }}
     steps:
       - uses: actions/checkout@v3
+      
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@777684df761b882a3f4f70db16ac70d8cc78d0ea
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+          
+      - name: Success notification
+        if: success()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          details: A new version has been built.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          
+      - name: Failure notification
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: Build has failed.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
