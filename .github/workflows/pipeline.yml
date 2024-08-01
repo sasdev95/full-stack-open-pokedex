@@ -54,3 +54,11 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: 'A new version has been built.'
+
+      - name: Failure notification
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: 'Build has failed. Commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.author.username }} broke the build.'
