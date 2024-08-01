@@ -1,0 +1,36 @@
+name: Periodic Health Check
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: 'https://your-deployed-application-url/health'
+          max-attempts: 3
+          retry-delay: 5s
+          retry-all: true
+
+      - name: Success notification
+        if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: 'Health check succeeded for the deployed application.'
+
+      - name: Failure notification
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: 'Health check failed for the deployed application. Please investigate.'
