@@ -14,7 +14,7 @@ jobs:
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v4
         with:
-          url: 'https://your-deployed-application-url/health'
+          url: 'https://full-stack-open-pokedex-ez92.onrender.com/health'
           max-attempts: 3
           retry-delay: 5s
           retry-all: true
